@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Biblioteca_teste</title>
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 20px;
+                max-width: 700px;
+                margin: 40px auto;
+                padding: 20px;
+                background-color: #121212;
+                color: #f5f5f5;
+            }
+
+            input {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 10px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 8px;
+            }
+
+            button {
+                cursor: pointer;
+                background-color: #ff9800;
+                color: black;
+                border: none;
+                padding: 10px 14px;
+                margin: 5px 5px 0 0;
+                border-radius: 8px;
+                font-weight: bold;
+            }
+
+            button:hover {
+                opacity: 0.70;
+            }
+
+            button:active {
+                opacity: 0.6;
+            }
+
+            #remove:hover {
+                background-color: red;
+            }
+
+            .card {
+                border: 2px solid #ccc;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-radius: 20px;
+                background-color: #1e1e1e;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            }
+
+            #saida {
+                background-color: #1e1e1e;
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 20px;
+            }
+
+            h1, h3 {
+                text-align: center;
+                color: #ff9800;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <h1>Sistema de Biblioteca</h1>
+
+        <div class="card">
+            <h3>Cadastro de livros</h3>
+            <input type="text" id="nome" placeholder="Nome do livro">
+            <input type="number" id="quantidade" placeholder="Quantidade">
+            <button onclick="cadastrar()">Cadastrar</button>
+        </div>
+
+        <div class="card">
+            <h3>Ações</h3>
+            <input type="text" id="nomeAcao" placeholder="Nome do livro">
+            <button onclick="listar()">Listar livros</button>
+            <button onclick="buscar()">Buscar</button>
+            <button onclick="emprestar()">Emprestar</button>
+            <button onclick="devolver()">Devolver</button>
+            <button id = "remove" onclick="remover()">Remover</button>
+        </div>
+
+        <div id="saida">
+
+        </div>
+
+        <script>
+            async function cadastrar() {
+                let nome = document.getElementById("nome").value;
+                let quantidade = document.getElementById("quantidade").value;
+
+                if (!nome || !quantidade) {
+                    mostrar("Digite um livro e sua quantidade")
+                    return;
+                }
+
+                let r = await fetch(`/cadastro?nome=${nome}&quantidade=${quantidade}`, {
+                    method: "POST"
+                });
+
+                let dados = await r.json()
+                mostrar(dados.msg);
+            }
+
+            async function listar() {
+
+                let r = await fetch(`/livros`)
+
+                let dados = await r.json()
+
+                if (Array.isArray(dados)) {
+                    mostrar(dados.join("\n"));
+                }
+                else {
+                    mostrar(dados.msg)
+                }
+            }
+
+            async function buscar() {
+                let nome = document.getElementById("nomeAcao").value;
+
+                let r = await fetch(`/buscar?nome=${nome}`);
+
+                let dados = await r.json()
+                mostrar(dados.msg);
+            }
+
+            async function emprestar() {
+                let nome = document.getElementById("nomeAcao").value;
+
+                let r = await fetch(`/emprestar?nome=${nome}`, {
+                    method: "POST"
+                });
+
+                let dados = await r.json()
+                mostrar(dados.msg);
+            }
+
+            async function devolver() {
+                let nome = document.getElementById("nomeAcao").value;
+
+                let r = await fetch(`/devolver?nome=${nome}`, {
+                    method: "POST"
+                });
+
+                let dados = await r.json()
+                mostrar(dados.msg);
+            }
+
+            async function remover() {
+                let nome = document.getElementById("nomeAcao").value;
+
+                let r = await fetch(`/remover?nome=${nome}`, {
+                    method: "DELETE"
+                });
+
+                let dados = await r.json()
+                mostrar(dados.msg);
+            }
+
+            function mostrar(texto) {
+                document.getElementById("saida").innerText = texto;
+            }
+        </script>
+
+    </body>
+</html>
