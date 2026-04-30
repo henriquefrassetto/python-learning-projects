@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Calculadora</title>
+
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            #calculadora {
+                background-color: #000000;
+                border-radius: 50px;
+                width: 500px;
+                height: 700px;
+                overflow: hidden;
+            }
+
+            #equacao {
+                width: 100%;
+                padding: 20px;
+                border: none;
+                background-color: #5a5a5a;
+                font-size: 60px;
+                font-family: Arial, sans-serif;
+                color: white;
+                text-align: left;
+            }
+
+            #keys{
+                display: grid;
+                grid-template-columns: repeat(4 , 1fr);
+                gap: 10px;
+                padding: 25px;
+            }
+
+            button {
+                cursor: pointer;
+                width: 100px;
+                height: 100px;
+                border-radius: 50px;
+                background-color: #5a5a5a;
+                color: white;
+                border: none;
+                font-size: 50px;
+                font-family: Arial, sans-serif;
+            }
+
+            button:hover {
+                opacity: 0.8;
+            }
+
+            button:active {
+                opacity: 0.6;
+            }
+
+            .operador {
+                background-color: #ff956d;
+                grid-column: 4;
+            }
+
+            #zero {
+                width: 215px;
+                grid-column: span 2;
+            }
+            #remover {
+                width: 215px;
+                grid-column: span 2;
+                background-color: #a6a6a6;
+            }
+            #limpar {
+                background-color: #a6a6a6;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div id="calculadora">
+            <input id="equacao" readonly>
+            <div id="keys">
+                <button id = "remover" onclick="remover()"><</button>
+                <button id = "limpar" onclick="limpar()">C</button>
+                <button class = "operador" onclick="display('/')">/</button>
+
+                <button onclick="display('7')">7</button>
+                <button onclick="display('8')">8</button>
+                <button onclick="display('9')">9</button>
+                <button class = "operador" onclick="display('*')">X</button>
+
+                <button onclick="display('4')">4</button>
+                <button onclick="display('5')">5</button>
+                <button onclick="display('6')">6</button>
+                <button class = "operador" onclick="display('-')">-</button>
+
+                <button onclick="display('1')">1</button>
+                <button onclick="display('2')">2</button>
+                <button onclick="display('3')">3</button>
+                <button class = "operador" onclick="display('+')">+</button>
+
+                <button id="zero" onclick="display('0')">0</button>
+                <button onclick="display('.')">.</button>
+                <button class = "operador" onclick="calculate()">=</button>
+
+            </div>
+        </div>
+
+        <script>
+
+            function display(valor) {
+                let disp = document.getElementById("equacao");
+                disp.value += valor;
+            }
+
+            function remover() {
+                let remove = document.getElementById("equacao");
+                remove.value = remove.value.slice(0, -1);
+            }
+
+            function limpar() {
+                document.getElementById("equacao").value = "";
+            }
+
+            async function calculate() {
+                let equacao = document.getElementById("equacao").value;
+
+                let r = await fetch(`/evaluate?equacao=${encodeURIComponent(equacao)}`, {
+                    method: "POST"
+                });
+
+                let dados = await r.json()
+                mostrar(dados.msg);
+            }
+
+            function mostrar(texto) {
+                document.getElementById("equacao").value = texto;
+            }
+        </script>
+
+    </body>
+</html>
