@@ -9,9 +9,9 @@ It allows users to convert values between different units of **length**, **weigh
 
 * Convert between multiple unit types:
 
-  * 📏 Length (mm, cm, m, km, in, ft, yd, mi)
-  * ⚖️ Weight (mg, g, kg, oz, lb)
-  * 🌡️ Temperature (C, F, K)
+  * Length (mm, cm, m, km, in, ft, yd, mi)
+  * Weight (mg, g, kg, oz, lb)
+  * Temperature (C, F, K)
 * Real-time conversion (no button required)
 * Dynamic UI (units update based on selected category)
 * Simple and responsive interface
@@ -32,8 +32,7 @@ It allows users to convert values between different units of **length**, **weigh
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/unit-converter.git
-cd unit-converter
+git clone https://github.com/henriquefrassetto/python-learning-projects/tree/main/UnitConverter
 ```
 
 Create and activate a virtual environment:
