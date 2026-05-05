@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>UnitConverter</title>
+
+        <style>
+
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 20px;
+                max-width: 400px;
+                margin: 50px auto;
+                padding: 20px;
+                background-color: #353535;
+                color: #f5f5f5;
+            }
+
+            button {
+                padding: 10px;
+                margin: 5px;
+                cursor: pointer;
+                border-radius: 5px;
+                font-size: 15px;
+                font-weight: bold;
+                border: none;
+            }
+
+            input, select {
+                background-color: #1e1e1e;
+                color: white;
+                border: none;
+                font-size: 20px;
+            }
+
+            label {
+                font-size: 20px;
+            }
+
+            button:hover {
+                opacity: 0.9;
+            }
+
+            .active {
+                background-color: #353535;
+                color: white;
+            }
+
+            #type {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            #type button {
+                flex: 1;
+                max-width: 150px;
+                padding: 10px;
+            }
+
+            #texts {
+                display: grid;
+                gap: 10px;
+                padding: 25px;
+            }
+
+            .card {
+                border: 2px solid #ccc;
+                padding: 25px;
+                margin-bottom: 20px;
+                border-radius: 20px;
+                background-color: #1e1e1e;
+                box-shadow: 0 2px 12px #787878;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <h1>Unit Converter</h1>
+
+        <div class="card">
+
+            <div id="type">
+
+            <button id="btn-length" onclick="select_type('length')">Length</button>
+            <button id="btn-weight" onclick="select_type('weight')">Weight</button>
+            <button id="btn-temperature" onclick="select_type('temperature')">Temperature</button>
+
+            </div>
+
+            <div id="texts">
+
+                <label for="conversion_from">Unit to convert from:</label>
+                <select id="conversion_from"></select>
+
+                <label for="conversion_to">Unit to convert to:</label>
+                <select id="conversion_to"></select>
+
+                <label for="input_value">Enter the value to convert:</label>
+                <input type="text" id="input_value" placeholder="Value to convert">
+
+                <label for="result">Result:</label>
+                <input id="result" readonly>
+
+            </div>
+
+        </div>
+
+        <script>
+
+            const unities = {
+                length: ["mm","cm","m","km","in","ft","yd","mi"],
+                weight: ["mg","g","kg","oz","lb"],
+                temperature: ["°C","°F","K"]
+            };
+
+            document.getElementById("input_value").addEventListener("input", convert);
+            document.getElementById("conversion_from").addEventListener("change", convert);
+            document.getElementById("conversion_to").addEventListener("change", convert);
+
+            function update_unities() {
+                let from = document.getElementById("conversion_from");
+                let to = document.getElementById("conversion_to");
+
+                from.innerHTML = "";
+                to.innerHTML = "";
+
+                unities[selected].forEach(u => {
+                    from.innerHTML += `<option value="${u}">${u}</option>`;
+                    to.innerHTML += `<option value="${u}">${u}</option>`;
+                  });
+            }
+
+            let selected = "length";
+
+            function select_type(type) {
+                selected = type;
+
+                document.querySelectorAll("#type button").forEach(btn => {
+                btn.classList.remove("active");
+                });
+
+                document.getElementById(`btn-${type}`).classList.add("active");
+
+                update_unities()
+                convert()
+
+            }
+
+            async function convert() {
+                let value = document.getElementById("input_value").value;
+                let from = document.getElementById("conversion_from").value;
+                let to = document.getElementById("conversion_to").value;
+
+                if (!value || !from || !to) {
+                    document.getElementById("result").value = ""
+                    return;
+                }
+
+                let r = await fetch(`/${selected}_conversion?conversion_from=${from}&conversion_to=${to}&input_value=${value}`);
+
+                let data = await r.json();
+
+                document.getElementById("result").value = `${value} ${from} = ${data.result} ${to}`;
+            }
+
+        </script>
+
+    </body>
+</html>
