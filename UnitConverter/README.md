@@ -1,11 +1,7 @@
-# 🔄 Unit Converter
+# 🔄 Unit Converter (project from roadmap.sh: https://roadmap.sh/projects/unit-converter)
 
 A simple web-based unit converter built with **FastAPI (Python)** and **JavaScript**.
 It allows users to convert values between different units of **length**, **weight**, and **temperature** in real time.
-
-## 📌 Project Reference
-
-https://roadmap.sh/projects/unit-converter
 
 ---
 
