@@ -32,7 +32,8 @@ It allows users to convert values between different units of **length**, **weigh
 Clone the repository:
 
 ```bash
-git clone https://github.com/henriquefrassetto/python-learning-projects/tree/main/UnitConverter
+git clone https://github.com/henriquefrassetto/python-learning-projects.git
+cd python-learning-projects/UnitConverter
 ```
 
 Create and activate a virtual environment:
