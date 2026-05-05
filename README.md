@@ -6,7 +6,7 @@ Collection of Python projects focused on OOP, logic, backend and frontend fundam
 - Vehicle OOP Simulator
 - Binary search
 - Calculator in web page
-- Unit converter in web page
+- Unit converter in web page (project reference: https://roadmap.sh/projects/unit-converter)
 
 ## Tech Used
 - Python
