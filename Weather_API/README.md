@@ -20,6 +20,16 @@ It provides real-time weather data, forecasts, favorites management, and search 
 
 ---
 
+## 📸 Preview
+
+### Main Section
+
+![Dashboard](assets/Massachussetts_ex.png)
+
+![Forecast](assets/Nevada_ex_metric.png)
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Backend:** Python + FastAPI
