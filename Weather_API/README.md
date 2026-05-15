@@ -24,9 +24,9 @@ It provides real-time weather data, forecasts, favorites management, and search 
 
 ### Main Section
 
-![Dashboard](assets/Massachussetts_ex.png)
+(assets/Massachussetts_ex.png)
 
-![Forecast](assets/Nevada_ex_metric.png)
+(assets/Nevada_ex_metric.png)
 
 ---
 
