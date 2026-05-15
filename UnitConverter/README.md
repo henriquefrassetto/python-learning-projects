@@ -95,19 +95,3 @@ http://127.0.0.1:8000
 * The frontend captures user input and sends requests to the backend using `fetch()`.
 * The backend processes the conversion and returns the result as JSON.
 * The UI updates automatically whenever the input or units change.
-
----
-
-## 📌 Future Improvements
-
-* Add more unit categories (speed, pressure, energy)
-* Improve UI/UX design
-* Add input validation and error handling
-* Create a unified `/convert` endpoint
-* Deploy the app online
-
----
-
-## 📄 License
-
-This project is open-source and available under the MIT License.
